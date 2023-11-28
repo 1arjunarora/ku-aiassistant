@@ -2,3 +2,4 @@ pdfplumber
 openai
 pandas
 Pillow
+PyMuPDF
