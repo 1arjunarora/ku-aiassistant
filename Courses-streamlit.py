@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
     # Specify the file path directly
     #file_path = os.path.join(os.path.expanduser("~"), "Desktop\AI Assistant\checksheets", f"{max_label}.pdf")
-    file_path = f"https://raw.githubusercontent.com/1arjunarora/ku-aiassistant/main/checksheets/{selected_option}.pdf"
+    file_path = f"https://raw.githubusercontent.com/1arjunarora/ku-aiassistant/main/checksheets/{max_label}.pdf"
 
 
     # Get user query input
