@@ -25,7 +25,7 @@ with st.sidebar:
     st.markdown(
         "## How does this work? \n"
         "Our AI assistant is integrated with the latest version of university curriculum, checksheets and coursework to help students\n"
-        "in quickly finding relevant and accurate insights to plan for their future. Please review your final plan with you academic advisor after! \n"
+        "in quickly finding relevant and accurate insights to plan for their future. Please review your final plan with your academic advisor after! \n"
     )
     
 # Set your OpenAI API key
