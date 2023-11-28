@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
 
 import streamlit as st
 import pdfplumber
@@ -63,9 +59,21 @@ def upload_pdf_and_retrieve_info(file_path, user_query):
 if __name__ == "__main__":
     # Streamlit app
   #  st.title("AI Powered Academic Advising")
-
+    
+    # List of options
+    options = [
+        "Accounting",
+        "Finance",
+        "Entrepreneurship",
+        "General Business",
+        "Human Resource Management",
+        "Personal Financial Planning",
+        "Management",
+        "Marketing",
+        "Supply Chain Management"
+    ]
     # User input for max_label
-    max_label = st.text_input("Enter Business Major:", "For example Marketing, Accounting, Sports Management, etc.")
+    max_label = st.selectbox("Enter Your Prefferred Major:", options)
 
     # Specify the file path directly
     file_path = os.path.join(os.path.expanduser("~"), "Desktop\AI Assistant\checksheets", f"{max_label}.pdf")
