@@ -20,10 +20,10 @@ st.image(image_path)
 
 with st.sidebar:
     # About section
-    st.markdown("# Meet Kelly - Your AI Academic Advisor")
+    st.markdown("# Meet Kelly - Your AI Powered Academic Advising Assistant")
     st.markdown(
         "This AI Assistant allows you to share your academic interests and career goals, and "
-        "receive personalized recommendations for academic major, job potential, and classes! "
+        "receive personalized recommendations for university curriculum and classes! "
     )
 
     # Divider
