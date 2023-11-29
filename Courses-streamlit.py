@@ -9,7 +9,7 @@ from io import BytesIO
 from PIL import Image
 
 # Set your OpenAI API key
-openai.api_key = "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"
+openai.api_key = "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"
 
 # Logo setup
 image_path = Image.open('logo.jpg')
@@ -59,7 +59,7 @@ Selected_label = st.selectbox("Enter Your Preferred Major:", options)
 file_path = f"https://raw.githubusercontent.com/1arjunarora/ku-aiassistant/main/checksheets/{Selected_label}.pdf"
 
 # Get user query input
-user_query = st.text_input("Enter your query:", "As a freshman, what classes should I take? I am in my 3rd semester, what classes should I take?")
+user_query = st.text_input("Enter your query:", "As a freshman, what classes should I take? Or I am in my 3rd semester, what classes should I take?")
 
 ##########################################################################################################
 
@@ -74,7 +74,7 @@ def upload_pdf_and_retrieve_info(file_path, user_query):
                 pdf_text += page.extract_text()
     
         # Set up a prompt with the extracted text
-        prompt = f"Act like an academic advisor at a university, be concise with your suggestions, and share your answers in bullet format. Additionally, answer the question asked by student, by starting with saying thank you for asking the question and mention that Students should meet with their advisors each semester to monitor their progress towards graduation requirements. Lastly, retrieve information from the following PDF:\n{pdf_text}\n\nUser Query:"
+        prompt = f"Start by saying thank you for asking the question! Then act like an academic advisor at Kutztown University, be concise with your suggestions, and share your answers about coursework in a list format. Please reference this link at end [Reference](https://www.kutztown.edu/academics/colleges-and-departments/business/department-of-business-administration/curriculum/checksheets.html). Retrieve information from the following PDF:\n{pdf_text}\n\nUser Query:"
     
         # Combine prompt and user query
         input_text = f"{prompt} {user_query} "
