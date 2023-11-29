@@ -1,14 +1,16 @@
-
+# import libraries
 import streamlit as st
 import pdfplumber
 import os
 import openai
 from PIL import Image
+import fitz  # PyMuPDF
 
+# logo setup
 image_path = Image.open('logo.jpg')
 st.image(image_path)
 
-
+# sidebar FAQ
 with st.sidebar:
     
     # About section
@@ -31,12 +33,20 @@ with st.sidebar:
 # Set your OpenAI API key
 openai.api_key = "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"
 
-def upload_pdf_and_retrieve_info(file_path, user_query):
+def upload_pdf_and_retrieve_info(url, user_query):
     # Read the PDF file and extract text content
-    with pdfplumber.open(file_path) as pdf:
+    with fitz.open(url) as pdf:
         pdf_text = ""
-        for page in pdf.pages:
-            pdf_text += page.extract_text()
+        for page_number in range(pdf.page_count):
+            page = pdf[page_number]
+            pdf_text += page.get_text()
+
+#def upload_pdf_and_retrieve_info(file_path, user_query):
+    # Read the PDF file and extract text content
+#    with pdfplumber.open(file_path) as pdf:
+#        pdf_text = ""
+#        for page in pdf.pages:
+#           pdf_text += page.extract_text()
 
     # Set up a prompt with the extracted text
     prompt = f"Step 1 - Act like an academic advisor at a university, be concise with your suggestions, and share a list of core classes and required courses in bullet format first and then answer the question. Step 2 - Start with thank you for asking the question and mention that  Students should meet with their advisors each semester to monitor their progress toward the graduation requirements. Step 3 - Retrieve information from the following PDF:\n{pdf_text}\n\nUser Query:"
@@ -79,15 +89,14 @@ if __name__ == "__main__":
     #file_path = os.path.join(os.path.expanduser("~"), "Desktop\AI Assistant\checksheets", f"{max_label}.pdf")
     file_path = f"https://raw.githubusercontent.com/1arjunarora/ku-aiassistant/main/checksheets/{max_label}.pdf"
 
-
     # Get user query input
     user_query = st.text_input("Enter your query:", "For example, what are some of the core classes I should take for entrepreneurship?")
 
     # Process file and user query when a button is clicked
-    if st.button("Ask Kutztown University's Personalized AI Assistant"):
+    if st.button("Ask Kutztown University's Custom AI Assistant"):
         # Call the function to retrieve information
         model_response = upload_pdf_and_retrieve_info(file_path, user_query)
-
+    
         # Display the model's response
         st.subheader("AI Assistant's Response:")
         st.write(model_response)
