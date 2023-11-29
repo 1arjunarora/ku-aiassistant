@@ -69,7 +69,7 @@ def upload_pdf_and_retrieve_info(file_path, user_query):
     if response.status_code == 200:
         pdf_content = BytesIO(response.content)
         with pdfplumber.open(pdf_content) as pdf:
-            text = ""
+            pdf_text = ""
             for page in pdf.pages:
                 pdf_text += page.extract_text()
     
