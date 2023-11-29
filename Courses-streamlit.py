@@ -36,6 +36,11 @@ with st.sidebar:
         "in quickly finding relevant and accurate insights to plan for their future. Please review your final plan with your academic advisor after! \n"
     )
 
+    st.markdown(
+        """
+        If you encounter any issues or have feedback, please [contact us](mailto:support@joinadvisorai.com).
+        """
+    )
 ##########################################################################################################
 # main app section setup
 # List of options
