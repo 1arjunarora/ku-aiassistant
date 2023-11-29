@@ -91,7 +91,7 @@ def upload_pdf_and_retrieve_info(file_path, user_query):
             engine="text-davinci-003",  # You can choose another engine if needed
             prompt=input_text,
             temperature=0.2,
-            max_tokens=800,
+            max_tokens=500,
             n=1
         )
     
