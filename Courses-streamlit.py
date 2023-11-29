@@ -8,8 +8,8 @@ import requests
 from io import BytesIO
 from PIL import Image
 
-# Set your OpenAI API key
-openai.api_key = "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"
+# Access the OpenAI API key from secrets
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Logo setup
 image_path = Image.open('logo.jpg')
