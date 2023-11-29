@@ -3,8 +3,10 @@ import streamlit as st
 import pdfplumber
 import os
 import openai
-from PIL import Image
 import fitz  # PyMuPDF
+import requests
+from io import BytesIO
+from PIL import Image
 
 # Set your OpenAI API key
 openai.api_key = "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"
@@ -53,7 +55,7 @@ options = [
 # User inputs
 Selected_label = st.selectbox("Enter Your Preferred Major:", options)
 
-# seleect the file path of curriculum dynamically
+# select the file path of curriculum dynamically
 file_path = f"https://raw.githubusercontent.com/1arjunarora/ku-aiassistant/main/checksheets/{Selected_label}.pdf"
 
 # Get user query input
