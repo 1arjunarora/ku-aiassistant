@@ -58,8 +58,6 @@ def upload_pdf_and_retrieve_info(url, user_query):
     return response['choices'][0]['text']
 
 if __name__ == "__main__":
-    # Streamlit app
-    st.title("AI Powered Academic Advising")
 
     # List of options
     options = [
@@ -71,7 +69,8 @@ if __name__ == "__main__":
         "Personal Financial Planning",
         "Management",
         "Marketing",
-        "Supply Chain Management"
+        "Supply Chain Management",
+        "Sports Management"
     ]
 
     # User input for max_label
@@ -81,7 +80,7 @@ if __name__ == "__main__":
     file_path = f"https://raw.githubusercontent.com/1arjunarora/ku-aiassistant/main/checksheets/{max_label}.pdf"
 
     # Get user query input
-    user_query = st.text_input("Enter your query:", "For example, what are some of the core classes I should take for entrepreneurship?")
+    user_query = st.text_input("Enter your query:", "As a freshman, what classes should I take? I am in my 3rd semester, what classes should I take?")
 
     # Process file and user query when a button is clicked
     if st.button("Ask Kutztown University's Custom AI Assistant"):
