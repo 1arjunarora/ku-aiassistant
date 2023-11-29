@@ -63,21 +63,16 @@ user_query = st.text_input("Enter your query:", "As a freshman, what classes sho
 
 ##########################################################################################################
 
-import PyPDF2
-import requests
-from io import BytesIO
+def upload_pdf_and_retrieve_info(file_path, user_query):
+    response = requests.get(file_path)
 
-def extract_text_from_pdf_url(pdf_url):
-    response = requests.get(pdf_url)
     if response.status_code == 200:
-
         pdf_content = BytesIO(response.content)
-        pdf_reader = PyPDF2.PdfFileReader(pdf_content)
-        text = ""
-        for page_number in range(pdf_reader.numPages):
-            page = pdf_reader.getPage(page_number)
-            pdf_text += page.extractText()
-
+        with pdfplumber.open(pdf_content) as pdf:
+            text = ""
+            for page in pdf.pages:
+                pdf_text += page.extract_text()
+    
         # Set up a prompt with the extracted text
         prompt = f"Act like an academic advisor at a university, be concise with your suggestions, and share your answers in bullet format. Additionally, answer the question asked by student, by starting with saying thank you for asking the question and mention that Students should meet with their advisors each semester to monitor their progress towards graduation requirements. Lastly, retrieve information from the following PDF:\n{pdf_text}\n\nUser Query:"
     
@@ -95,10 +90,6 @@ def extract_text_from_pdf_url(pdf_url):
     
         # Extract and return the model's response
         return response['choices'][0]['text']
-
-    else:
-        print(f"Failed to fetch PDF from URL. Status code: {response.status_code}")
-        return None
 
 ##########################################################################################################
 # Process file and user query when a button is clicked
