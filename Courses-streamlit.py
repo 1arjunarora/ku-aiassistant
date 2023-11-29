@@ -63,32 +63,44 @@ user_query = st.text_input("Enter your query:", "As a freshman, what classes sho
 
 ##########################################################################################################
 
-def upload_pdf_and_retrieve_info(url, user_query):
-    # Read the PDF file and extract text content
-    with fitz.open(url) as pdf:
-        pdf_text = ""
-        for page_number in range(pdf.page_count):
-            page = pdf[page_number]
-            pdf_text += page.get_text()
+import PyPDF2
+import requests
+from io import BytesIO
 
-    # Set up a prompt with the extracted text
-    prompt = f"Act like an academic advisor at a university, be concise with your suggestions, and share your answers in bullet format. Additionally, answer the question asked by student, by starting with saying thank you for asking the question and mention that Students should meet with their advisors each semester to monitor their progress towards graduation requirements. Lastly, retrieve information from the following PDF:\n{pdf_text}\n\nUser Query:"
+def extract_text_from_pdf_url(pdf_url):
+    response = requests.get(pdf_url)
+    if response.status_code == 200:
 
-    # Combine prompt and user query
-    input_text = f"{prompt} {user_query} "
+        pdf_content = BytesIO(response.content)
+        pdf_reader = PyPDF2.PdfFileReader(pdf_content)
+        text = ""
+        for page_number in range(pdf_reader.numPages):
+            page = pdf_reader.getPage(page_number)
+            pdf_text += page.extractText()
 
-    # Call OpenAI's API for completion
-    response = openai.Completion.create(
-        engine="text-davinci-003",  # You can choose another engine if needed
-        prompt=input_text,
-        temperature=0.2,
-        max_tokens=800,
-        n=1
-    )
+        # Set up a prompt with the extracted text
+        prompt = f"Act like an academic advisor at a university, be concise with your suggestions, and share your answers in bullet format. Additionally, answer the question asked by student, by starting with saying thank you for asking the question and mention that Students should meet with their advisors each semester to monitor their progress towards graduation requirements. Lastly, retrieve information from the following PDF:\n{pdf_text}\n\nUser Query:"
+    
+        # Combine prompt and user query
+        input_text = f"{prompt} {user_query} "
+    
+        # Call OpenAI's API for completion
+        response = openai.Completion.create(
+            engine="text-davinci-003",  # You can choose another engine if needed
+            prompt=input_text,
+            temperature=0.2,
+            max_tokens=800,
+            n=1
+        )
+    
+        # Extract and return the model's response
+        return response['choices'][0]['text']
 
-    # Extract and return the model's response
-    return response['choices'][0]['text']
+    else:
+        print(f"Failed to fetch PDF from URL. Status code: {response.status_code}")
+        return None
 
+##########################################################################################################
 # Process file and user query when a button is clicked
 if st.button("Ask University's AI Assistant"):
 
