@@ -81,7 +81,7 @@ def upload_pdf_and_retrieve_info(file_path, user_query):
                 pdf_text += page.extract_text()
     
         # Set up a prompt with the extracted text
-        prompt = f"Start by saying thank you for asking the question! Then act like an academic advisor at Kutztown University, be concise with your suggestions, and share your answers about coursework in a list format. Please reference this link at end [Reference](https://www.kutztown.edu/academics/colleges-and-departments/business/department-of-business-administration/curriculum/checksheets.html). Retrieve information from the following PDF:\n{pdf_text}\n\nUser Query:"
+        prompt = f"Start by saying thank you for asking the question! Then act like an academic advisor at Kutztown University, be concise with your suggestions, and recommend courses in bullet format if students ask about classes to take for a given scenario. Please reference this link at end [Reference](https://www.kutztown.edu/academics/colleges-and-departments/business/department-of-business-administration/curriculum/checksheets.html), and retrieve information about course requirements from the following PDF:\n{pdf_text}\n\nUser Query:. In the end of the response about classes, provide a disclaimer that the final course list should be approved by your academic advisor to ensure university guidelines are met. If students ask about career paths for a major, provide only 3 to 4 recommendations with relevant information on key skills, job titles, and example job activities. Do not provide very long answers or paragraph format."
     
         # Combine prompt and user query
         input_text = f"{prompt} {user_query} "
